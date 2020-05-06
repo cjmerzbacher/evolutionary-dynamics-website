@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Varela+Round&display=swap"
+    rel="stylesheet">
+  <title>Understanding Systems</title>
+  <meta name="description" content="How do complex systems work? How can we model them?">
+  <meta name="author" content="Charlotte Merzbacher">
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+
+  <div id="page-title">
+    <h1><mark>Understanding Systems</mark></h1>
+    <h2>from networks to nonlinear dynamics</h2>
+  </div>
+
+  <div id="nav">
+    <a href="#introduction">Introduction</a>
+    <a href="#modelingevolution">Modeling Evolution</a>
+    <a href="#finitepopulations">Finite Populations</a>
+    <a href="#fitnesslandscapes">Fitness Landscapes</a>
+
+  </div>
+
+  <div id="container">
+    <div class="chapter" id='modelingevolution'>
+      <h1>Modeling Evolution</h1>
+      <p>We can use differential equations to model reproduction, selection, mutation,
+        and thus evolution. While mutations are introduced randomly, selective pressures
+        and their effects on the frequencies of alleles in the populations are deterministic.</p>
+
+      <h2>Reproduction</h2>
+      <p>The simplest biological models include reproducing organisms. Bacteria such as E. coli
+        can divide into two identical daughter cells in a process known as <b>asexual reproduction</b>.
+        Without limiting environmental conditions, the number of cells is 2<sup>n</sup>. This type of
+        exponential growth results in an explosion of population. If even a single bacterial
+        cell grew exponentially for three days, the total mass of its offspring would exceed
+        the mass of the earth! Below is an example of a simple exponential function.</p>
+      <div class="visualization-wrapper" id="exponential"></div>
+
+      <p>However, cells do not grow exponentially forever. Depletion of nutrients, accumulation of toxic byproducts, or
+        increased cell death can all contribute to slowing growth. Another function commonly used to model microbial
+        growth is a logistic functions. As the number of bacteria nears some carrying capacity, K, growth slows until
+        the population asymptotes to the carrying capacity.</p>
+      <div class="visualization-wrapper" id="logistic"></div>
+      <p>Other, more complex equations can model aspects of reproduction not captured by these two simple models.
+        However, as with any choice of model, it's important to remember that all models have tradeoffs in accuracy,
+        simplicity, and utility. For many applications, an exponential or logistic growth curve is sufficient.</p>
+    </div>
+
+    <div class="chapter" id='finitepopulations'>
+      <h1>Finite Populations</h1>
+      <h2>Mutation and the Neutral Theory of Evolution</h2>
+      <p>
+        New alleles are introduced into the population by mistakes in DNA replication known as <b>mutations</b>. New
+        mutations can spread if they have neutral or adaptive effects in the environment. In the simulation below,
+        mutations can be introduced with a frequency given by the slider. The stars are mutated organisms.</p>
+      <div class="visualization-wrapper" id="mutation"></div>
+      <p>However, most mistakes do not result in an adaptive or even neutral mutation. These neutral mutations can still
+        fix, or take over, a population by random <b>genetic drift</b>. In fact, the vast majority of mutations at the
+        molecular level are due to random genetic drift of neutral mutations. This theory is known as the <b>neutral
+          theory of evolution</b>.</p>
+      <p>We can model the neutral theory with a <b>Moran process</b>. A Moran process assumes a finite, steady
+        population
+        size. At each time step, one organism dies and another is born. If the population has two alleles, red and blue,
+        there are four possible outcomes in a single time step:</p>
+
+      <ul>
+        <li>Blue dies, blue is born</li>
+        <li>Blue dies, red is born</li>
+        <li>Red dies, red is born</li>
+        <li>Red dies, blue is born</li>
+      </ul>
+
+      <p>If the chance of a particular phenotype reproducing is proportional to that phenotype's frequency in the
+        population, a single allele can eventually take over due to random genetic drift.</p>
+      <div class="visualization-wrapper" id="moran"></div>
+
+      <h2>Selection in Finite Populations</h2>
+
+      <p>To improve our Moran model and incorporate selection, we can define the relative fitness <em>r</em>, which is
+        the
+        ratio of the red organisms' fitness to the blue organisms' fitness. As <em>r</em> increases, the red organisms
+        dominate
+        over the blue organisms.
+      </p>
+      <div class="visualization-wrapper" id="moranselection"></div>
+
+      <h2>Mating</h2>
+
+      <p>Up until this point, we have only examined asexually reproducing populations. However, many organisms,
+        including
+        humans, mate and reproduce sexually. One of the simplest models of sexual reproduction results in
+        <b>Hardy-Weinberg equilibrium</b>. Hardy-Weinberg models rely on several assumptions:</p>
+
+      <ul>
+        <li>The population is infinite</li>
+        <li>Mating is random</li>
+        <li>Organisms are diploid and each parent carries two copies of the gene</li>
+        <li>There is no selection</li>
+      </ul>
+
+      <p>While these assumptions are often violated in real-world scenarios, the Hardy-Weinberg model provides a simple
+        way
+        of understanding gene frequencies in a population. In the simplest case, two alleles, <em>A</em> and <em>a</em>,
+        have
+        frequencies <em>p</em>> and <em>q</em> respectively. The genotype frequencies are <em>p<sup>2</sup></em> for
+        <em>AA</em> homozygotes, <em>q<sup>2</sup></em> for the
+        <em>aa</em> homozygotes, and <em>2pq</em> for the heterozygotes. Over the generations, variability is maintained
+        in the
+        population.</p>
+
+        
+      <p>Deviations from the Hardy-Weinberg formula in finite populations can be seen in the finite population
+        simulation
+        below. With smaller population sizes, we see larger deviations from the ideal Hardy-Weinberg lines.</p>
+        Population Size: <input type="range" min="1" max="10" step='1' id="slider">
+
+      <div class="visualization-wrapper" id="hardyweinberg"></div>
+
+    </div>
+
+    <div class="chapter" id='fitnesslandscapes'>
+      <h1>Fitness Landscapes</h1>
+      <h2>Sequence spaces and fitness landscapes</h2>
+      <p><b>Sequence space</b> is a way of representing every possible sequence in a genome. Each dimension represents
+        a nucleotide site that can have one of four values (A, C, T, and G). For simplicity, many models reduce this to
+        two values (0 and 1). Neighbors in sequence space differ by a single nucleotide.
+      </p>
+      <p>A 100-base pair segment of genome has a 100-dimensional sequence space, and a full human genome a much
+        higher-dimensional one. While the size of sequence space makes it impossible to model directly, it is a useful
+        thought experiment to imagine evolution as a trajectory through sequence space.
+      </p>
+      <p>Evolution is driven by fluctuations in the <b>fitness landscape</b>. Fitness landscapes visualize the
+        relationship
+        between genotypes and reproductive success. Each point in sequence space, which corresponds to a specific
+        genotype, has an associated fitness value. While most possible genomes are not viable and thus their
+        corresponding fitness values are low, regions of higher fitness exist.
+      </p>
+
+      <h2>Tuning protein expression levels</h2>
+
+      <p>Fitness landscapes can also be used to describe protein sequences and expression levels. One example we will
+        consider in more depth is tuning lac operon expression levels in <em>E. coli</em>.</p>
+
+      <p>The lactose operon, or lac operon, is a sequence of genes which produce the proteins needed for <em>E.
+          coli</em> to
+        digest lactose. Glucose is the preferred carbon source for the bacterium, so if sufficient glucose is present,
+        lactose does not need to be digested and the lac operon should be turned off. Furthermore, when there is no
+        lactose present, the operon should be turned off regardless of the glucose concentration. When only lactose is
+        present, however, the operon should work. In this case, it encodes LacZ, which degrades lactose for energy, and
+        LacY, which transports lactose into the cell.</p>
+
+      <p>In addition to just turning off and on, however, the lac operon can tune its expression levels to match the
+        concentration of lactose. Cells with just enough LacZ to digest the surrounding lactose but not too much to slow
+        down production of other proteins reproduce the fastest. By natural selection, we would expect this expression
+        level to dominate the population over time.</p>
+
+      <p>The tradeoff between too much and too little LacZ can be modeled by a simple cost/benefit function. The cost
+        function describes the tradeoff of producing LacZ rather than another useful protein. When fit to experimental
+        data, a limit M describes the upper limit of LacZ expression at which the cost of production strongly increases.
+        The cost function used is:</p>
+
+      <div class="equation-wrapper" id="costfunction"></div>
+
+      <p>The benefit function describes the growth rate advantage conferred by LacZ:</p>
+
+      <div class="equation-wrapper" id="benefitfunction"></div>
+
+      <p>Subtracting the cost from the benefit results in the fitness function. This function can be calculated for a
+        variety of LacZ and external lactose levels to find the optimal lac operon expression at a specific lactose
+        level:</p>
+
+      <div class="visualization-wrapper" id="lactoselevels"></div>
+
+      <h2>Quasispecies theory</h2>
+      <p>Natural selection and mutations guide populations through sequence space to an equilibrium. This equilibrium
+        often
+        results in a population of variable genomes, known as a <b>quasispecies</b>, rather than a single genotype. For
+        instance, viruses mutate rapidly, which results in multiple genotypes within a single host. Most of these
+        viruses
+        have approximately equal fitness; it is a more successful reproduction strategy to have a broader range of fit
+        genotypes rather than a single fittest genotype. This phenomenon is known as <b>survival of the quasispecies</b>
+      </p>
+
+      <p>The quasispecies equation describes the mutation and selection process of an infinitely large population on the
+        fitness landscape. The relative frequency of a genome <em>i</em>> changes because of two phenomena: species
+        death to
+        maintain population size and mutation from another genome <em>j</em>. These two teams make up the quasispecies
+        equation:</p>
+
+      <div class="equation-wrapper" id="quasispeciesequation"></div>
+
+      <p>The first term describes mutation. The number of mutations converting genome <em>j</em> to genome <em>i</em> is
+        equivalent to
+        the frequency of <em>j</em> in the population multiplied by the fitness of <em>j</em> (<em>fj</em>) and
+        <em>qij</em>, the probability that the
+        mutation will occur. The second term accounts for removal of <em>i</em> due to death, which occurs at the rate
+        of the
+        average population fitness phi. Quasispecies climb upward in a fitness landscape to one globally stable
+        equilibrium; however, this equilibrium may not include the fittest individual genome.</p>
+
+      <div class="visualization-wrapper" id="quasispecies"></div>
+    </div>
+
+
+  </div>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="exponential.js"></script>
+  <script src="logistic.js"></script>
+  <script src="hardyweinberg.js"></script>
+  <script src="moran.js"></script>
+  <script src="moranselection.js"></script>
+
+
+</body>
+
+</html>

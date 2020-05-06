@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Varela+Round&display=swap"
+    rel="stylesheet">
+  <title>Understanding Systems</title>
+  <meta name="description" content="How do complex systems work? How can we model them?">
+  <meta name="author" content="Charlotte Merzbacher">
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+
+  <div id="page-title">
+    <h1><mark>Understanding Systems</mark></h1>
+    <h2>from networks to nonlinear dynamics</h2>
+  </div>
+
+  <div id="nav">
+    <a href="#introduction">Introduction</a>
+    <a href="#modelingevolution">Modeling Evolution</a>
+    <a href="#finitepopulations">Finite Populations</a>
+    <a href="#fitnesslandscapes">Fitness Landscapes</a>
+
+  </div>
+
+  <div id="container">
+
+    <div class="chapter" id='finitepopulations'>
+      <h1>Finite Populations</h1>
+      <h2>Mutation and the Neutral Theory of Evolution</h2>
+      <p>
+        New alleles are introduced into the population by mistakes in DNA replication known as <b>mutations</b>. New
+        mutations can spread if they have neutral or adaptive effects in the environment. In the simulation below,
+        mutations can be introduced with a frequency given by the slider. The stars are mutated organisms.</p>
+      <div class="visualization-wrapper" id="mutation"></div>
+      <p>However, most mistakes do not result in an adaptive or even neutral mutation. These neutral mutations can still
+        fix, or take over, a population by random <b>genetic drift</b>. In fact, the vast majority of mutations at the
+        molecular level are due to random genetic drift of neutral mutations. This theory is known as the <b>neutral
+          theory of evolution</b>.</p>
+      <p>We can model the neutral theory with a <b>Moran process</b>. A Moran process assumes a finite, steady
+        population
+        size. At each time step, one organism dies and another is born. If the population has two alleles, red and blue,
+        there are four possible outcomes in a single time step:</p>
+
+      <ul>
+        <li>Blue dies, blue is born</li>
+        <li>Blue dies, red is born</li>
+        <li>Red dies, red is born</li>
+        <li>Red dies, blue is born</li>
+      </ul>
+
+      <p>If the chance of a particular phenotype reproducing is proportional to that phenotype's frequency in the
+        population, a single allele can eventually take over due to random genetic drift.</p>
+      <div class="visualization-wrapper" id="moran"></div>
+
+      <h2>Selection in Finite Populations</h2>
+
+      <p>To improve our Moran model and incorporate selection, we can define the relative fitness <em>r</em>, which is
+        the
+        ratio of the red organisms' fitness to the blue organisms' fitness. As <em>r</em> increases, the red organisms
+        dominate
+        over the blue organisms.
+      </p>
+      <div class="visualization-wrapper" id="moranselection"></div>
+
+      <h2>Mating</h2>
+
+      <p>Up until this point, we have only examined asexually reproducing populations. However, many organisms,
+        including
+        humans, mate and reproduce sexually. One of the simplest models of sexual reproduction results in
+        <b>Hardy-Weinberg equilibrium</b>. Hardy-Weinberg models rely on several assumptions:</p>
+
+      <ul>
+        <li>The population is infinite</li>
+        <li>Mating is random</li>
+        <li>Organisms are diploid and each parent carries two copies of the gene</li>
+        <li>There is no selection</li>
+      </ul>
+
+      <p>While these assumptions are often violated in real-world scenarios, the Hardy-Weinberg model provides a simple
+        way
+        of understanding gene frequencies in a population. In the simplest case, two alleles, <em>A</em> and <em>a</em>,
+        have
+        frequencies <em>p</em>> and <em>q</em> respectively. The genotype frequencies are <em>p<sup>2</sup></em> for
+        <em>AA</em> homozygotes, <em>q<sup>2</sup></em> for the
+        <em>aa</em> homozygotes, and <em>2pq</em> for the heterozygotes. Over the generations, variability is maintained
+        in the
+        population.</p>
+
+        
+      <p>Deviations from the Hardy-Weinberg formula in finite populations can be seen in the finite population
+        simulation
+        below. With smaller population sizes, we see larger deviations from the ideal Hardy-Weinberg lines.</p>
+        Population Size: <input type="range" min="1" max="10" step='1' id="slider">
+
+      <div class="visualization-wrapper" id="hardyweinberg"></div>
+
+    </div>
+
+
+  </div>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="hardyweinberg.js"></script>
+  <script src="moran.js"></script>
+  <script src="moranselection.js"></script>
+
+</body>
+
+</html>
